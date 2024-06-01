@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Splash extends JFrame {
+public class Splash extends JFrame implements ActionListener {
 
     Splash() {
 
@@ -24,10 +26,18 @@ public class Splash extends JFrame {
         JButton clickHere = new JButton("CLICK HERE TO CONTINUE");
         clickHere.setBounds(100, 600, 500, 50);
         image.add(clickHere);
+        clickHere.addActionListener(this);
 
         setSize(700,700);
         setVisible(true);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        setVisible(false);
+        new Login();
     }
 
     public static void main(String[] args) {
