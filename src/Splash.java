@@ -18,7 +18,7 @@ public class Splash extends JFrame {
         Image i2 = i1.getImage().getScaledInstance(700, 700, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
-        image.setBounds(0, 0, 690, 665);
+        image.setBounds(0, 0, 695, 665);
         add(image);
 
         JButton clickHere = new JButton("CLICK HERE TO CONTINUE");
