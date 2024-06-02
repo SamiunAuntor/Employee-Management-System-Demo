@@ -28,6 +28,7 @@ public class Splash extends JFrame implements ActionListener {
         image.add(clickHere);
         clickHere.addActionListener(this);
 
+        setTitle("Splash");
         setSize(700,700);
         setVisible(true);
         setLocationRelativeTo(null);

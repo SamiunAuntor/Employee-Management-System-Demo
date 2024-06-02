@@ -1,37 +1,61 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 
 public class RemoveEmployee extends JFrame implements ActionListener {
+    private final JTextField idField;
+    private final JButton removeButton;
+    private final JButton goToViewButton;
 
-    JTextField idField;
-    JButton removeButton, cancelButton;
+    private final JButton homeButton;
 
     public RemoveEmployee() {
-        setTitle("Remove Employee");
-        setSize(400, 200);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Only close this window on dispose
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 2));
+        getContentPane().setBackground(Color.WHITE);
+        setLayout(null);
 
-        JLabel idLabel = new JLabel("Employee ID:");
+        JLabel heading = new JLabel("REMOVE EMPLOYEE DETAILS");
+        heading.setBounds(125, 10, 650, 50);
+        heading.setFont(new Font("serif", Font.BOLD, 30));
+        heading.setForeground(Color.RED);
+        add(heading);
+
+        JLabel idLabel = new JLabel("Enter Employee ID to remove: ");
+        idLabel.setBounds(10, 100, 250, 30);
+        add(idLabel);
+
         idField = new JTextField();
-        panel.add(idLabel);
-        panel.add(idField);
+        idField.setBounds(230, 100, 300, 30);
+        add(idField);
 
         removeButton = new JButton("Remove");
+        removeButton.setBounds(70, 170, 250, 50);
         removeButton.addActionListener(this);
-        cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(this);
-        panel.add(removeButton);
-        panel.add(cancelButton);
+        add(removeButton);
 
-        add(panel);
+        goToViewButton = new JButton("View");
+        goToViewButton.setBounds(370, 170, 250, 50);
+        goToViewButton.addActionListener(this);
+        add(goToViewButton);
+
+        homeButton = new JButton("Home");
+        homeButton.setBounds(220, 240, 250, 50);
+        homeButton.addActionListener(this);
+        add(homeButton);
+
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/Remove.jpg"));
+        Image i2 = i1.getImage().getScaledInstance(700, 335, Image.SCALE_DEFAULT);
+        ImageIcon i3 = new ImageIcon(i2);
+        JLabel image = new JLabel(i3);
+        image.setBounds(0, 330, 700, 335);
+        add(image);
+
+        setTitle("Remove Employee Details");
+        setSize(700,700);
         setVisible(true);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
@@ -39,52 +63,56 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         if (e.getSource() == removeButton) {
             String id = idField.getText().trim();
             if (!id.isEmpty()) {
-                removeEmployee(id);
+                removeEmployeeById(id);
             } else {
-                JOptionPane.showMessageDialog(this, "Please enter an Employee ID to remove.");
+                JOptionPane.showMessageDialog(this, "Please enter an Employee ID.");
             }
-        } else if (e.getSource() == cancelButton) {
-            dispose(); // Close this window
+        }
+        else if (e.getSource() == homeButton)
+        {
+            setVisible(false);
+            new Home();
+        }
+        else
+        {
+            setVisible(false);
+            new ViewEmployee();
         }
     }
 
-    private void removeEmployee(String id) {
-        try (BufferedReader br = new BufferedReader(new FileReader("employees.txt"));
-             BufferedWriter bw = new BufferedWriter(new FileWriter("temp.txt"))) {
+    private void removeEmployeeById(String id) {
+        File inputFile = new File("employees.txt");
+        File tempFile = new File("employees_temp.txt");
 
+        boolean employeeFound = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
-            boolean removed = false;
-
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data[0].equals(id)) {
-                    removed = true;
-                    continue; // Skip writing this line to temp file
+                if (!data[0].equals(id)) {
+                    bw.write(line);
+                    bw.newLine();
+                } else {
+                    employeeFound = true;
                 }
-                bw.write(line + "\n"); // Write to temp file
             }
-
-            if (removed) {
-                JOptionPane.showMessageDialog(this, "Employee with ID: " + id + " removed successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "No employee found with ID: " + id);
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "An error occurred while removing the employee.");
         }
 
-        // Delete the original file and rename the temp file
-        File originalFile = new File("employees.txt");
-        File tempFile = new File("temp.txt");
-        if (tempFile.renameTo(originalFile)) {
-            System.out.println("File renamed successfully");
+        if (employeeFound) {
+            if (inputFile.delete()) {
+                tempFile.renameTo(inputFile);
+                JOptionPane.showMessageDialog(this, "Employee with ID " + id + " removed successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error occurred while removing the employee.");
+            }
         } else {
-            System.out.println("Failed to rename file");
+            tempFile.delete();
+            JOptionPane.showMessageDialog(this, "Employee with ID " + id + " not found.");
         }
-
-        dispose(); // Close this window
     }
 
     public static void main(String[] args) {

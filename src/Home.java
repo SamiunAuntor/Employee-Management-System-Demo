@@ -43,6 +43,7 @@ public class Home extends JFrame implements ActionListener {
         image.add(removeEmployee);
         removeEmployee.addActionListener(this);
 
+        setTitle("Home");
         setSize(700, 700);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -63,6 +64,7 @@ public class Home extends JFrame implements ActionListener {
         else if (ae.getSource() == updateEmployee)
         {
             setVisible(false);
+            new UpdateEmployee();
         }
         else {
             setVisible(false);

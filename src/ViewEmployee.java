@@ -12,45 +12,49 @@ public class ViewEmployee extends JFrame implements ActionListener {
     JButton searchButton, removeButton, backButton;
 
     public ViewEmployee() {
-        setTitle("View Employee Details");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 700);
-        setLocationRelativeTo(null);
 
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
+        getContentPane().setBackground(Color.WHITE);
+        setLayout(null);
 
         JLabel searchLabel = new JLabel("Search by Employee ID");
-        topPanel.add(searchLabel);
+        searchLabel.setBounds(20, 20, 150, 30);
+        add(searchLabel);
 
         searchField = new JTextField(10);
-        topPanel.add(searchField);
+        searchField.setBounds(180, 20, 150, 30);
+        add(searchField);
 
         searchButton = new JButton("Search");
+        searchButton.setBounds(350, 20, 100, 30);
         searchButton.addActionListener(this);
-        topPanel.add(searchButton);
+        add(searchButton);
 
         removeButton = new JButton("Remove");
+        removeButton.setBounds(470, 20, 100, 30);
         removeButton.addActionListener(this);
-        topPanel.add(removeButton);
+        add(removeButton);
 
         backButton = new JButton("Back");
+        backButton.setBounds(590, 20, 80, 30);
         backButton.addActionListener(this);
-        topPanel.add(backButton);
-
-        getContentPane().add(topPanel, BorderLayout.NORTH);
+        add(backButton);
 
         DefaultTableModel model = new DefaultTableModel();
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setBounds(20, 70, 660, 580);
+        add(scrollPane);
 
         String[] columnNames = {"Employee ID", "Name", "Father's Name", "Date of Birth", "Address", "Phone", "Email", "NID Number", "Designation", "Highest Education", "Salary"};
         model.setColumnIdentifiers(columnNames);
 
         loadEmployeeData(model);
 
+        setTitle("View Employee Details");
+        setSize(700,700);
         setVisible(true);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void loadEmployeeData(DefaultTableModel model) {
@@ -74,12 +78,11 @@ public class ViewEmployee extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == removeButton) {
             String searchId = searchField.getText().trim();
-            if (!searchId.isEmpty()) {
+            if (e.getSource() == removeButton) {
                 setVisible(false);
                 new RemoveEmployee();
             }
         } else if (e.getSource() == backButton) {
-
             setVisible(false);
             new Home();
         }
@@ -104,6 +107,6 @@ public class ViewEmployee extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(ViewEmployee::new);
+        new ViewEmployee();
     }
 }
