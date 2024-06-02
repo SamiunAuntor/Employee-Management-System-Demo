@@ -1,0 +1,11 @@
+5,,,DD/MM/YYYY,,,,,,BSc,
+578,,,DD/MM/YYYY,,,,,,BSc,
+7,,,DD/MM/YYYY,,,,,,BSc,
+100,,,DD/MM/YYYY,,,,,,BSc,
+5000,,,DD/MM/YYYY,,,,,,BSc,
+1088,Samiun,Shahinul,2003,Gazipur,,,,,MA,
+777,,,DD/MM/YYYY,,,,,,BSc,
+220042167,Ariyan,,DD/MM/YYYY,,,,,,PHD,500000
+220042169,Ariyan,,DD/MM/YYYY,,,,,,BSc,
+665,avc==bc,,DD/MM/YYYY,,,,,,BSc,
+2244,gjfhf,,DD/MM/YYYY,,,,,,BSc,

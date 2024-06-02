@@ -6,7 +6,6 @@ public class Connection {
 
     protected Connection() {
         users.put("Admin", "Admin123");
-        users.put("user2", "password2");
     }
 
     public boolean authenticate(String username, String password) {

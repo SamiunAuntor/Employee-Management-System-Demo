@@ -28,7 +28,7 @@ public class Home extends JFrame implements ActionListener {
         image.add(addEmployee);
         addEmployee.addActionListener(this);
 
-        viewEmployee = new JButton("View Employee");
+        viewEmployee = new JButton("View Employees");
         viewEmployee.setBounds(242, 180, 200, 30);
         image.add(viewEmployee);
         viewEmployee.addActionListener(this);
@@ -53,11 +53,12 @@ public class Home extends JFrame implements ActionListener {
         if (ae.getSource() == addEmployee)
         {
             setVisible(false);
-
+            new AddEmployee();
         }
         else if (ae.getSource() == viewEmployee)
         {
             setVisible(false);
+            new ViewEmployee();
         }
         else if (ae.getSource() == updateEmployee)
         {
@@ -65,6 +66,7 @@ public class Home extends JFrame implements ActionListener {
         }
         else {
             setVisible(false);
+            new RemoveEmployee();
         }
     }
 
